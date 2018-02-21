@@ -1,0 +1,5 @@
+# Browsers that we support
+last 3 version
+> 5%
+not ie <= 9
+ie 10
