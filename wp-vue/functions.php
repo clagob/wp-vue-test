@@ -16,32 +16,6 @@ remove_action('wp_head','wp_generator');
 remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wlwmanifest_link');
 
-// // Remove support for Comments
-// function remove_comment_support() {
-// 	if ( function_exists('remove_post_type_support') ) {
-// 		remove_post_type_support('post', 'comments');
-// 		remove_post_type_support('page', 'comments');
-// 	}
-// }
-// //add_action('admin_menu', 'remove_comment_support');
-// // Remove Comments from Admin Menu:
-// function sb_remove_admin_menus (){
-// 	if ( function_exists('remove_menu_page') )
-// 		remove_menu_page('edit-comments.php');
-// }
-// //add_action('admin_menu', 'sb_remove_admin_menus');
-
-// function remove_dashboard_widgets(){
-//     //remove_meta_box('dashboard_right_now', 'dashboard', 'normal');   // Right Now
-//     remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal'); // Recent Comments
-//     remove_meta_box('dashboard_incoming_links', 'dashboard', 'normal');  // Incoming Links
-//     remove_meta_box('dashboard_plugins', 'dashboard', 'normal');   // Plugins
-//     remove_meta_box('dashboard_quick_press', 'dashboard', 'side');  // Quick Press
-//     remove_meta_box('dashboard_recent_drafts', 'dashboard', 'side');  // Recent Drafts
-//     remove_meta_box('dashboard_primary', 'dashboard', 'side');   // WordPress blog
-//     remove_meta_box('dashboard_secondary', 'dashboard', 'side');   // Other WordPress News
-// }
-//add_action('wp_dashboard_setup', 'remove_dashboard_widgets');
 
 
 // Disable the emoji's
@@ -103,6 +77,7 @@ function my_scripts() {
 
 
     // JavaScript at the bottom page
+		//wp_enqueue_script('fontawesome', 'https://use.fontawesome.com/releases/v5.0.4/js/all.js', array(), '5.0.4', true);
     //wp_enqueue_script('custom-js', get_template_directory_uri().'/custom.js', array('jquery'), NULL, true);
     wp_enqueue_script('theme-script', get_template_directory_uri().'/dist/main.js', array(), NULL, true);
 
@@ -120,8 +95,6 @@ function my_scripts() {
       'site_name' => get_bloginfo( 'name' ),
       'routes'    => rest_theme_routes(),
     ));
-
-    //wp_enqueue_script('fontawesome', 'https://use.fontawesome.com/releases/v5.0.4/js/all.js', array(), '5.0.4', true);
 
   }
 }
@@ -148,43 +121,6 @@ function rest_theme_routes() {
 	return $routes;
 }
 add_action( 'wp_enqueue_scripts', 'my_scripts' );
-
-// function my_deregister_scripts(){
-//  wp_dequeue_script( 'wp-embed' );
-// }
-// add_action( 'wp_footer', 'my_deregister_scripts' );
-
-//
-//
-// function disable_embeds_code_init() {
-//  // Remove the REST API endpoint.
-//  remove_action( 'rest_api_init', 'wp_oembed_register_route' );
-//  // Turn off oEmbed auto discovery.
-//  add_filter( 'embed_oembed_discover', '__return_false' );
-//  // Don't filter oEmbed results.
-//  remove_filter( 'oembed_dataparse', 'wp_filter_oembed_result', 10 );
-//  // Remove oEmbed discovery links.
-//  remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
-//  // Remove oEmbed-specific JavaScript from the front-end and back-end.
-//  remove_action( 'wp_head', 'wp_oembed_add_host_js' );
-//  add_filter( 'tiny_mce_plugins', 'disable_embeds_tiny_mce_plugin' );
-//  // Remove all embeds rewrite rules.
-//  add_filter( 'rewrite_rules_array', 'disable_embeds_rewrites' );
-//  // Remove filter of the oEmbed result before any HTTP requests are made.
-//  remove_filter( 'pre_oembed_result', 'wp_filter_pre_oembed_result', 10 );
-// }
-// add_action( 'init', 'disable_embeds_code_init', 9999 );
-// function disable_embeds_tiny_mce_plugin($plugins) {
-//   return array_diff($plugins, array('wpembed'));
-// }
-// function disable_embeds_rewrites($rules) {
-//   foreach($rules as $rule => $rewrite) {
-//     if(false !== strpos($rewrite, 'embed=true')) {
-//       unset($rules[$rule]);
-//     }
-//   }
-//   return $rules;
-// }
 
 
 
@@ -226,38 +162,31 @@ add_filter('rest_prepare_deal', 'wp_api_encode_yoast', 10, 3);
 ////////////////////////////////////////////
 // PESONALISE
 ////////////////////////////////////////////
+error_reporting(E_ALL & ~E_NOTICE);
+if( function_exists('add_theme_support') ) {
+  add_theme_support('post-thumbnails');
+  add_theme_support('nav-menus');
+  //add_theme_support('automatic-feed-links');
+  add_theme_support('html5', array('comment-list', 'comment-form', 'search-form', 'gallery', 'caption'));
+  add_theme_support('title-tag');
+  //Additional Sizes
+  //set_post_thumbnail_size(500, 0);
+  //add_image_size('landscape', 600, 400, true);
+  //add_image_size('square', 360, 360, true);
+  //add_image_size('banner', 1170, 350, true);
+  //add_image_size('people', 360, 195, true);
+}
 
 
-
-// // Set Menu theme locations
-// if( function_exists('register_nav_menus') ) {
-//   register_nav_menus(
-//     array(
-//       'nav_main' => 'Main Navigation'
-//       //, 'nav_tab' => 'TAB Navigation (only one item)'
-//       //, 'nav_aside' => 'Aside Navigation'
-//       , 'nav_bottom' => 'Footer Navigation'
-// 			//, 'nav_help' => 'How can we help?'
-//     )
-//   );
-// }
-
-
-//error_reporting(E_ALL & ~E_NOTICE);
-// if( function_exists('add_theme_support') ) {
-//   add_theme_support('post-thumbnails');
-//   add_theme_support('nav-menus');
-//   add_theme_support('automatic-feed-links');
-//   add_theme_support('html5', array('comment-list', 'comment-form', 'search-form', 'gallery', 'caption'));
-//   add_theme_support('title-tag');
-//   //Additional Sizes
-//   //set_post_thumbnail_size(500, 0);
-//   //add_image_size('landscape', 600, 400, true);
-//   //add_image_size('square', 360, 360, true);
-//   //add_image_size('banner', 1170, 350, true);
-//   //add_image_size('people', 360, 195, true);
-// }
-
+// Set Menu theme locations
+if( function_exists('register_nav_menus') ) {
+  register_nav_menus(
+    array(
+      'nav_main' => 'Main Navigation'
+      , 'nav_bottom' => 'Footer Navigation'
+    )
+  );
+}
 
 
 // // Change Excerpt Length - Default: 55
@@ -265,10 +194,9 @@ add_filter('rest_prepare_deal', 'wp_api_encode_yoast', 10, 3);
 // add_filter('excerpt_length', 'new_excerpt_length');
 
 
-
-// // Change Excerpts more filter - Default: [...]
-// function new_excerpt_more($more){return '...';}
-// add_filter('excerpt_more', 'new_excerpt_more');
+// Change Excerpts more filter - Default: [...]
+function new_excerpt_more($more) { return '...'; }
+add_filter('excerpt_more', 'new_excerpt_more');
 
 
 
