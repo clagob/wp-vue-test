@@ -1,5 +1,5 @@
 <template>
-  <div id="app-body">
+  <div id="app">
     <app-header></app-header>
     <router-view/>
     <app-footer></app-footer>
@@ -16,18 +16,32 @@ export default {
     AppHeader,
     AppFooter
   },
-  ready() {
-    this.updateTitle(wp.site_name);
-  },
   methods: {
     updateTitle(pageTitle) {
-      document.title = (pageTitle ? pageTitle + ' - ' : '') + wp.site_name;
+      document.title = (pageTitle ? pageTitle + ' - ' : '') + wp.site_name
+    },
+    removeSeoContent() {
+      var seoEl = document.getElementById('seo-content')
+      seoEl.setAttribute('style', 'display:none')
+      //seoEl.parentNode.removeChild(seoEl)
     }
+  },
+  created: function () {
+    this.$on('page-title', this.updateTitle)
+  },
+  // It's good to clean up event listeners before
+  // a component is destroyed.
+  beforeDestroy: function () {
+    this.$off('page-title', this.updateTitle)
   },
   events: {
     'page-title': function(pageTitle) {
       this.updateTitle(pageTitle);
     }
+  },
+  mounted() {
+    this.updateTitle('')
+    this.removeSeoContent()
   }
 }
 </script>

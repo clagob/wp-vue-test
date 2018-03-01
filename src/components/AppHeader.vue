@@ -1,11 +1,11 @@
 <template>
   <header class="navbar navbar-light">
     <div class="container container-fluid-md-down">
-      <a class="navbar-brand" href="/" target="_blank" rel="noopener">
+      <router-link :to="{ name: 'home' }" class="navbar-brand">
         <img class="d-inline-block align-top" src="../assets/img/logo.svg" height="40" alt="Logo">
-      </a>
+      </router-link>
       <span class="navbar-text">
-        Text
+
       </span>
     </div>
   </header>

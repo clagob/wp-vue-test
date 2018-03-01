@@ -7,9 +7,10 @@ const
 
 // CUSTOM Folders
 const
+  BASE_PATH = '/', // in line with the functions.php
   THEME_FOLDER = 'wp-vue',
   DIST = path.resolve(__dirname, './' + THEME_FOLDER + '/dist/'),
-  PUBLIC_DIST = '/' + THEME_FOLDER + '/dist/',
+  PUBLIC_DIST = BASE_PATH + 'wp-content/themes/' + THEME_FOLDER + '/dist/',
   SRC = path.resolve(__dirname, './src'),
   SRC_IMG   = SRC + '/assets/img/',
   SRC_JS    = SRC + '/assets/js/',
@@ -79,7 +80,7 @@ module.exports = {
       },
       {
         test: /\.js$/i,
-        include: SRC_JS,
+        exclude: NODE_MODULES,
         loader: 'babel-loader',
       },
       {
@@ -109,75 +110,75 @@ module.exports = {
           fallback: "style-loader",
         })
       },
-      // {
-      //   test: /\.(png|jpe?g|gif|svg)$/i,
-      //   include: SRC_IMG,
-      //   use: [
-      //     {
-      //       loader: 'url-loader', // 'file-loader',
-      //       options: {
-      //         limit: 8192, // Convert images < 8kB to base64 strings with url-loader
-      //         name: '[name].[ext]?[hash]',
-      //         outputPath: 'img/',
-      //       },
-      //     },
-      //     {
-      //       loader: 'image-webpack-loader',
-      //       options: {
-      //         mozjpeg: {
-      //           progressive: true,
-      //           quality: 65
-      //         },
-      //         // optipng.enabled: false will disable optipng
-      //         optipng: {
-      //           //optimizationLevel: 7,
-      //           enabled: false,
-      //         },
-      //         pngquant: {
-      //           quality: '65-90',
-      //           speed: 4
-      //         },
-      //         gifsicle: {
-      //           interlaced: false,
-      //         },
-      //         svgo: {
-      //           plugins: [
-      //             {
-      //               removeViewBox: false
-      //             },
-      //             {
-      //               removeEmptyAttrs: false
-      //             }
-      //           ]
-      //         },
-      //         // the webp option will enable WEBP
-      //         // webp: {
-      //         //   quality: 75
-      //         // }
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        //include: SRC_IMG,
+        use: [
+          {
+            loader: 'url-loader', // 'file-loader',
+            options: {
+              limit: 10000, // Convert images < 10KB to base64 strings with url-loader
+              name: '[name].[ext]?[hash:7]',
+              outputPath: 'img/',
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                quality: 65
+              },
+              // optipng.enabled: false will disable optipng
+              optipng: {
+                //optimizationLevel: 7,
+                enabled: false,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              svgo: {
+                plugins: [
+                  {
+                    removeViewBox: false
+                  },
+                  {
+                    removeEmptyAttrs: false
+                  }
+                ]
+              },
+              // the webp option will enable WEBP
+              // webp: {
+              //   quality: 75
+              // }
+            },
+          },
+        ],
+      },
       // {
       //   test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
       //   include: SRC_FONTS,
       //   loader: 'url-loader'
       // },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000, // Convert images < 10KB to base64 strings with url-loader
-          name: '[name].[hash:7].[ext]',
-          outputPath: 'img/',
-        }
-      },
+      // {
+      //   test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+      //   loader: 'url-loader',
+      //   options: {
+      //     limit: 10000, // Convert images < 10KB to base64 strings with url-loader
+      //     name: '[name].[hash:7].[ext]',
+      //     outputPath: 'img/',
+      //   }
+      // },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000, // Convert images < 10KB to base64 strings with url-loader
-          name: '[name].[hash:7].[ext]',
+          name: '[name].[ext]?[hash:7]',
           outputPath: 'media/',
         }
       },
@@ -186,16 +187,11 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000, // Convert images < 10KB to base64 strings with url-loader
-          name: '[name].[hash:7].[ext]',
+          name: '[name].[ext]?[hash:7]',
           outputPath: 'fonts/',
         }
       }
     ]
-  },
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js'
-    }
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -205,111 +201,23 @@ module.exports = {
     }
   },
   performance: {
-    hints: 'warning'
+    //hints: 'warning'
   },
 
   plugins: ([
-    new ExtractTextPlugin({
-      filename: './css/[name].min.css',
-      allChunks: true,
-      disable: true,
-    }),
+    new ExtractTextPlugin("build.css"),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV)
     }),
-
-
-    // new CopyWebpackPlugin(
-    //   [
-    //     {
-    //       // Optimize all the images
-    //       // Good for when the images are not always referenced
-    //       context: SRC_IMG,
-    //       from: '**/*',
-    //       to: './img'
-    //     },
-    //   ],
-    //   {
-    //     //copyUnmodified: true
-    //   }
-    // ),
-
-    // new ImageminPlugin({
-    //   test: /\.(png|jpe?g|gif|svg)$/i,
-    //   mozjpeg: {
-    //     progressive: true,
-    //     quality: 65
-    //   },
-    //   // optipng.enabled: false will disable optipng
-    //   optipng: {
-    //     //optimizationLevel: 7,
-    //     enabled: false,
-    //   },
-    //   pngquant: {
-    //     quality: '65-90',
-    //     speed: 4
-    //   },
-    //   gifsicle: {
-    //     interlaced: false,
-    //   },
-    //   svgo:{
-    //     plugins: [
-    //       {
-    //         removeViewBox: false
-    //       },
-    //       {
-    //         removeEmptyAttrs: false
-    //       }
-    //     ]
-    //   },
-    //   // the webp option will enable WEBP
-    //   // webp: {
-    //   //   quality: 75
-    //   // }
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'common' // Specify the common bundle's name.
     // }),
-
-    // new webpack.DefinePlugin({
-    //   'process.env': {
-    //     NODE_ENV:  process.env.NODE_ENV === 'production' ? '"production"' : '"development"'
-    //   }
-    // })
-
-    // new webpack.ProvidePlugin({
-    //     $: 'jquery',
-    //     jQuery: 'jquery',
-    //     Popper: 'popper.js/dist/umd/popper.js',
-    //     'window.cookieconsent': 'cookieconsent'
-    // }),
-
-    // new UglifyJsPlugin(
-    //   {
-    //     sourceMap: true,
-    //     uglifyOptions: {
-    //       output: {
-    //         comments: /^!/
-    //       },
-    //       compress : {
-    //         warnings: false
-    //       }
-    //     }
-    //   }
-    // ),
-
-    // new webpack.optimize.UglifyJsPlugin({
-    //     sourceMap: true,
-    //     compress: {
-    //         warnings: false
-    //     }
-    // }),
-    // new webpack.LoaderOptionsPlugin({
-    //   minimize: true
-    // }),
-
   ]).concat(ENV==='production' ? [
     new webpack.optimize.UglifyJsPlugin({
       output: {
         comments: false, //comments: /^!/
       },
+      sourceMap: true,
       compress: {
         unsafe_comps: true,
         properties: true,
@@ -337,37 +245,4 @@ module.exports = {
     }),
   ] : []),
   devtool: ENV==='production' ? 'source-map' : 'eval',
-}
-
-
-
-if (process.env.NODE_ENV === 'production') {
-
-
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    // new webpack.optimize.UglifyJsPlugin({
-    //     sourceMap: true,
-    //     compress: {
-    //         warnings: false
-    //     }
-    // }),
-    // new webpack.LoaderOptionsPlugin({
-    //   minimize: true
-    // }),
-
-    // new UglifyJsPlugin(
-    //   {
-    //     sourceMap: true,
-    //     uglifyOptions: {
-    //       // output: {
-    //       //   comments: /^!/
-    //       // },
-    //       compress : true,
-    //       warnings: false,
-    //     },
-    //   }
-    // ),
-
-  ])
-
 }

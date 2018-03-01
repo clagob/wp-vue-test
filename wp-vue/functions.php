@@ -4,7 +4,7 @@
 require_once(dirname( __FILE__ ).'/lib/type/index.php');
 //require_once(dirname( __FILE__ ).'/lib/widget/widgets.php');
 //require_once(dirname( __FILE__ ).'/lib/shortcode/index.php');
-//require_once(dirname( __FILE__ ).'/lib/plugin/index.php');
+require_once(dirname( __FILE__ ).'/lib/plugin/index.php');
 
 
 
@@ -106,6 +106,7 @@ function my_scripts() {
     //wp_enqueue_script('custom-js', get_template_directory_uri().'/custom.js', array('jquery'), NULL, true);
     wp_enqueue_script('theme-script', get_template_directory_uri().'/dist/main.js', array(), NULL, true);
 
+		// REST
     // Prepare localized translations to JavaScript for client-side
     // https://codex.wordpress.org/Function_Reference/wp_localize_script
     $base_url  = esc_url_raw( home_url() );
@@ -114,6 +115,7 @@ function my_scripts() {
       'root'      => esc_url_raw( rest_url() ),
       'base_url'  => $base_url,
       'base_path' => $base_path ? $base_path . '/' : '/',
+			'theme_uri' => esc_url_raw( get_template_directory_uri() ),
       'nonce'     => wp_create_nonce( 'wp_rest' ),
       'site_name' => get_bloginfo( 'name' ),
       'routes'    => rest_theme_routes(),
@@ -152,8 +154,8 @@ add_action( 'wp_enqueue_scripts', 'my_scripts' );
 // }
 // add_action( 'wp_footer', 'my_deregister_scripts' );
 
-
-
+//
+//
 // function disable_embeds_code_init() {
 //  // Remove the REST API endpoint.
 //  remove_action( 'rest_api_init', 'wp_oembed_register_route' );
