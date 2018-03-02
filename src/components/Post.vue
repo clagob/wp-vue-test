@@ -1,5 +1,5 @@
 <template>
-  <transition appear name="fade">
+  <transition name="fade" mode="out-in">
     <div class="post">
       <h1 class="entry-title" v-if="isSingle">{{ item.title.rendered }}</h1>
       <h2 class="entry-title" v-else>

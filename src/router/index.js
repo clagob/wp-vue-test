@@ -23,23 +23,10 @@ routes.push({
   redirect: { name: 'blog' }
 })
 
-// Blog
-routes.push({
-  name: 'blog',
-  path: '/',
-  component: Posts
-})
-routes.push({
-  name: 'post',
-  path: '/:slug',
-  component: Post
-})
-
-
 // Deal list
 routes.push({
   name: 'deals',
-  path: '/deal/',
+  path: '/deal',
   component: Deals
 })
 routes.push({
@@ -47,6 +34,10 @@ routes.push({
   path: '/deal/:slug',
   component: Deal
 })
+
+
+
+
 
 // TESTS
 routes.push({
@@ -65,6 +56,21 @@ routes.push({
   path: '*',
   component: Error404
 })
+
+
+// Blog
+routes.push({
+  name: 'blog',
+  path: '/',
+  component: Posts
+})
+// NB: it must be the last of the list
+routes.push({
+  name: 'post',
+  path: '/:slug',
+  component: Post
+})
+
 
 const router = new Router({
   mode: 'history',

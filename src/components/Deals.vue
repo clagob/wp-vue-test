@@ -1,9 +1,11 @@
 <template>
-  <div class="container">
-    <div class="deals">
-      <Deal v-for="item in items" :key="item.id" :item="item"></Deal>
+  <transition name="fade" mode="out-in">
+    <div class="container">
+      <div class="deals">
+        <Deal v-for="item in items" :key="item.id" :deal="item"></Deal>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>

@@ -1,9 +1,11 @@
 <template>
-  <div class="container">
-    <div class="posts">
-      <Post v-for="item in items" :key="item.id" :post="item"></Post>
+  <transition name="fade" mode="out-in">
+    <div class="container">
+      <div class="posts">
+        <Post v-for="item in items" :key="item.id" :post="item"></Post>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>

@@ -1,9 +1,11 @@
 <template>
-  <div id="app">
-    <app-header></app-header>
-    <router-view/>
-    <app-footer></app-footer>
-  </div>
+  <transition appear name="fade">
+    <div id="app">
+      <app-header></app-header>
+      <router-view/>
+      <app-footer></app-footer>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -47,5 +49,16 @@ export default {
 </script>
 
 <style lang="scss">
-
+// Vue - Transaction
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .4s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+#seo-content{
+  opacity: 0;
+}
 </style>
