@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     getItem() {
-      this.$http.get(wp.root + 'wp/v2/posts/?slug=' + this.$route.params.slug)
+      this.$http.get(wp.root + 'wp/v2/posts/?_embed&slug=' + this.$route.params.slug)
         .then(response => {
           this.item = response.data[0]
           this.$parent.$emit('page-title', this.item.title.rendered)

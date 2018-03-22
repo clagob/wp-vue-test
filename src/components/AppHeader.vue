@@ -7,6 +7,18 @@
       <span class="navbar-text">
 
       </span>
+      <app-nav menu="nav_main" :inline="true" classes="test-claudio"></app-nav>
     </div>
   </header>
 </template>
+
+<script>
+import AppNav from '@/components/AppNav.vue'
+
+export default {
+  components: {
+    AppNav
+  }
+}
+
+</script>

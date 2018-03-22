@@ -31,7 +31,7 @@ const
 
 module.exports = {
   context: SRC,
-  entry: ['./main.js'], //'./assets/scss/index.scss'],
+  entry: ['./main.js'],
 
   output: {
     path: DIST,
@@ -83,33 +83,33 @@ module.exports = {
         exclude: NODE_MODULES,
         loader: 'babel-loader',
       },
-      {
-        test: /\.html$/i,
-        exclude: NODE_MODULES,
-        loader: 'raw-loader',
-      },
-      {
-        test: /\.css$/i,
-        exclude: NODE_MODULES,
-        use: [
-          'style-loader',
-          { loader: 'css-loader', options: { sourceMap: CSS_MAPS, importLoaders: 1 } },
-          { loader: 'postcss-loader', options: { sourceMap: CSS_MAPS } },
-        ],
-      },
-      {
-        // Extract all the CSS from the JS
-        test: /\.scss$/i,
-        exclude: NODE_MODULES,
-        use: ExtractTextPlugin.extract({
-          use: [
-            { loader: 'css-loader', options: { sourceMap: CSS_MAPS, importLoaders: 1 } },
-            { loader: 'postcss-loader', options: { sourceMap: CSS_MAPS } },
-            'sass-loader',
-          ],
-          fallback: "style-loader",
-        })
-      },
+      // {
+      //   test: /\.html$/i,
+      //   exclude: NODE_MODULES,
+      //   loader: 'raw-loader',
+      // },
+      // {
+      //   test: /\.css$/i,
+      //   exclude: NODE_MODULES,
+      //   use: [
+      //     'style-loader',
+      //     { loader: 'css-loader', options: { sourceMap: CSS_MAPS, importLoaders: 1 } },
+      //     { loader: 'postcss-loader', options: { sourceMap: CSS_MAPS } },
+      //   ],
+      // },
+      // {
+      //   // Extract all the CSS from the JS
+      //   test: /\.scss$/i,
+      //   exclude: NODE_MODULES,
+      //   use: ExtractTextPlugin.extract({
+      //     use: [
+      //       { loader: 'css-loader', options: { sourceMap: CSS_MAPS, importLoaders: 1 } },
+      //       { loader: 'postcss-loader', options: { sourceMap: CSS_MAPS } },
+      //       'sass-loader',
+      //     ],
+      //     fallback: "style-loader",
+      //   })
+      // },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         //include: SRC_IMG,
@@ -159,20 +159,6 @@ module.exports = {
           },
         ],
       },
-      // {
-      //   test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
-      //   include: SRC_FONTS,
-      //   loader: 'url-loader'
-      // },
-      // {
-      //   test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-      //   loader: 'url-loader',
-      //   options: {
-      //     limit: 10000, // Convert images < 10KB to base64 strings with url-loader
-      //     name: '[name].[hash:7].[ext]',
-      //     outputPath: 'img/',
-      //   }
-      // },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         loader: 'url-loader',
@@ -201,7 +187,7 @@ module.exports = {
     }
   },
   performance: {
-    //hints: 'warning'
+    hints: false //'warning'
   },
 
   plugins: ([

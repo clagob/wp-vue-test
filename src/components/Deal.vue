@@ -1,6 +1,6 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div class="post">
+    <div class="deal">
       <h1 class="entry-title" v-if="isSingle">{{ item.title.rendered }}</h1>
       <h2 class="entry-title" v-else>
         <router-link :to="{ name: item.type, params: { slug: item.slug } }">

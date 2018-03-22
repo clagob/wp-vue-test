@@ -60,6 +60,9 @@ function remove_head_scripts() {
 add_action( 'wp_enqueue_scripts', 'remove_head_scripts' );
 
 
+////////////////////////////////////////////
+// VUE as theme
+////////////////////////////////////////////
 
 // Load styles and scripts
 function my_scripts() {
@@ -81,48 +84,74 @@ function my_scripts() {
     //wp_enqueue_script('custom-js', get_template_directory_uri().'/custom.js', array('jquery'), NULL, true);
     wp_enqueue_script('theme-script', get_template_directory_uri().'/dist/main.js', array(), NULL, true);
 
-		// REST
+		// REST setting for VUE
     // Prepare localized translations to JavaScript for client-side
     // https://codex.wordpress.org/Function_Reference/wp_localize_script
     $base_url  = esc_url_raw( home_url() );
     $base_path = rtrim( parse_url( $base_url, PHP_URL_PATH ), '/' );
+		$domain = esc_url_raw(($_SERVER['SERVER_PORT']==='443'?'https://':'http://').$_SERVER['HTTP_HOST']);
     wp_localize_script( 'theme-script', 'wp', array(
-      'root'      => esc_url_raw( rest_url() ),
-      'base_url'  => $base_url,
-      'base_path' => $base_path ? $base_path . '/' : '/',
-			'theme_uri' => esc_url_raw( get_template_directory_uri() ),
-      'nonce'     => wp_create_nonce( 'wp_rest' ),
-      'site_name' => get_bloginfo( 'name' ),
-      'routes'    => rest_theme_routes(),
+      'root'     => esc_url_raw( rest_url() ),
+      'baseUrl'  => $base_url,
+      'basePath' => $base_path ? $base_path . '/' : '/',
+			'themeUri' => esc_url_raw( get_template_directory_uri() ),
+      'nonce'    => wp_create_nonce( 'wp_rest' ),
+      'siteName' => get_bloginfo( 'name' ),
+			'domain' 	 => $domain,
+      //'routes'    => rest_theme_routes(),
     ));
 
   }
 }
-// Get all the singular SLUGs (URIs) for SPA
-// To revisit because it could be big.
-function rest_theme_routes() {
-	$routes = array();
-	$query = new WP_Query( array(
-		'post_type'      => 'any',
-		'post_status'    => 'publish',
-		'posts_per_page' => -1,
-	) );
-	if ( $query->have_posts() ) {
-		while ( $query->have_posts() ) {
-			$query->the_post();
-			$routes[] = array(
-				'id'   => get_the_ID(),
-				'type' => get_post_type(),
-				'slug' => basename( get_permalink() ),
-			);
-		}
-	}
-	wp_reset_postdata();
-	return $routes;
-}
+// // Get all the singular SLUGs (URIs) for SPA
+// // To revisit because it could be big.
+// function rest_theme_routes() {
+// 	$routes = array();
+// 	$query = new WP_Query( array(
+// 		'post_type'      => 'any',
+// 		'post_status'    => 'publish',
+// 		'posts_per_page' => -1,
+// 	) );
+// 	if ( $query->have_posts() ) {
+// 		while ( $query->have_posts() ) {
+// 			$query->the_post();
+// 			$routes[] = array(
+// 				'id'   => get_the_ID(),
+// 				'type' => get_post_type(),
+// 				'slug' => basename( get_permalink() ),
+// 			);
+// 		}
+// 	}
+// 	wp_reset_postdata();
+// 	return $routes;
+// }
 add_action( 'wp_enqueue_scripts', 'my_scripts' );
 
 
+
+// Change WP default permalink
+//
+// Allow to use VUE as theme at the best
+function my_custom_rewrite_rule() {
+	global $wp_rewrite;
+	$wp_rewrite->front               = $wp_rewrite->root;
+	$wp_rewrite->set_permalink_structure( 'blog/%postname%/' );
+	$wp_rewrite->page_structure      = $wp_rewrite->root . 'page/%pagename%/'; //'page/%pagename%/';
+	$wp_rewrite->author_base         = 'author';
+	$wp_rewrite->author_structure    = '/' . $wp_rewrite->author_base . '/%author%';
+	$wp_rewrite->set_category_base( 'category' );
+	$wp_rewrite->set_tag_base( 'tag' );
+	$wp_rewrite->add_rule( '^blog$', 'index.php', 'top' );
+	//flush_rewrite_rules();
+}
+// Forcing permalink structure
+// function force_my_permalink_struct( $old_permalink_structure, $new_permalink_structure ) {
+// 	//update_option( 'permalink_structure', 'blog/%postname%' );
+// 	my_custom_rewrite_rule();
+// 	flush_rewrite_rules();
+// }
+// add_action( 'permalink_structure_changed', 'force_my_permalink_struct' );
+add_action( 'init', 'my_custom_rewrite_rule' );
 
 
 // Set metadata

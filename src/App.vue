@@ -2,7 +2,7 @@
   <transition appear name="fade">
     <div id="app">
       <app-header></app-header>
-      <router-view/>
+      <router-view :key="$route.fullPath" />
       <app-footer></app-footer>
     </div>
   </transition>
@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     updateTitle(pageTitle) {
-      document.title = (pageTitle ? pageTitle + ' - ' : '') + wp.site_name
+      document.title = (pageTitle ? pageTitle + ' - ' : '') + wp.siteName
     },
     removeSeoContent() {
       var seoEl = document.getElementById('seo-content')
@@ -49,15 +49,8 @@ export default {
 </script>
 
 <style lang="scss">
-// Vue - Transaction
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity .4s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
+@import "./assets/scss/transition";
+
 #seo-content{
   opacity: 0;
 }

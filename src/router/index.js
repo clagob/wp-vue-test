@@ -23,7 +23,40 @@ routes.push({
   redirect: { name: 'blog' }
 })
 
-// Deal list
+
+
+// Posts - Blog
+routes.push({
+  name: 'blog',
+  path: '/',
+  component: Posts
+})
+// Post
+routes.push({
+  name: 'post',
+  path: '/blog/:slug',
+  component: Post
+})
+// Taxonomy: Category
+// routes.push({
+//   name: 'category',
+//   path: '/category/:term',
+//   component: Posts
+// })
+// // Taxonomy: Tag
+// routes.push({
+//   name: 'tag',
+//   path: '/tag/:term',
+//   component: Posts
+// })
+// Author
+// routes.push({
+//   name: 'author',
+//   path: '/author/:user',
+//   component: Posts
+// })
+
+// Post type DEAL
 routes.push({
   name: 'deals',
   path: '/deal',
@@ -34,8 +67,6 @@ routes.push({
   path: '/deal/:slug',
   component: Deal
 })
-
-
 
 
 
@@ -51,30 +82,29 @@ routes.push({
   component: HelloWorld
 })
 
-// Error
+
+
+// Pages
 routes.push({
+  name: 'page',
+  path: '/page/:slug',
+  component: Page
+})
+
+
+// Error 404: page not found
+routes.push({
+  name: 'error',
   path: '*',
   component: Error404
 })
 
 
-// Blog
-routes.push({
-  name: 'blog',
-  path: '/',
-  component: Posts
-})
-// NB: it must be the last of the list
-routes.push({
-  name: 'post',
-  path: '/:slug',
-  component: Post
-})
-
-
+// Set ROUTER
 const router = new Router({
   mode: 'history',
-  base: wp.base_path,
+  base: wp.basePath,
+  linkActiveClass: 'open active',
   routes: routes
 })
 

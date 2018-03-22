@@ -1,4 +1,11 @@
-<?php get_header(); ?>
+<?php get_header();
+
+// global $wp_rewrite;
+// echo '<pre>';
+//print_r($wp_rewrite);
+// print_r($_SERVER);
+// echo '</pre>';
+?>
 
 <div id="seo-content">
   <?php
