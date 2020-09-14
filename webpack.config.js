@@ -21,11 +21,11 @@ const
 
 // Plugins
 const
-  UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
-  ExtractTextPlugin = require("extract-text-webpack-plugin"),
-  autoprefixer = require('autoprefixer'),
+  // UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
+  // autoprefixer = require('autoprefixer'),
   //CopyWebpackPlugin = require('copy-webpack-plugin'),
-  ImageminPlugin = require('imagemin-webpack-plugin').default
+  // ImageminPlugin = require('imagemin-webpack-plugin').default,
+  ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 
 

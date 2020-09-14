@@ -22,6 +22,12 @@ routes.push({
   path: '/',
   redirect: { name: 'blog' }
 })
+// Blog root
+routes.push({
+  name: 'blog-redirect',
+  path: '/blog',
+  redirect: { name: 'blog' }
+})
 
 
 
