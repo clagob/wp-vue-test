@@ -8,14 +8,14 @@ function my_customize_register( $wp_customize ) {
   //
   //
 
-  $wp_customize->add_section( 'my_telephone' , array('title' => __( 'Telephone settings', 'Inchora' ), 'priority'   => 20 ) );
+  $wp_customize->add_section( 'my_telephone' , array('title' => __( 'Telephone settings', 'Site' ), 'priority'   => 20 ) );
   $wp_customize->add_setting( 'my_telephone_number', array('default' => '', 'transport' => 'postMessage') );
   $wp_customize->add_control(
     new WP_Customize_Control(
       $wp_customize,
       'my_telephone_number',
       array(
-        'label'    => __( 'Telephone Number: [telephone]', 'Inchora' ),
+        'label'    => __( 'Telephone Number: [telephone]', 'Site' ),
         'section'  => 'my_telephone',
         'settings' => 'my_telephone_number',
         'type'     => 'text'
@@ -25,14 +25,14 @@ function my_customize_register( $wp_customize ) {
 
 
 
-  
+
 
 
   // SOCIAL LINKS SECTION
   //
   // All the social info for the creation of the icons
 
-  $wp_customize->add_section( 'my_social' , array('title' => __( 'SOCIAL links', 'Inchora' ), 'priority'   => 30 ) );
+  $wp_customize->add_section( 'my_social' , array('title' => __( 'SOCIAL links', 'Site' ), 'priority'   => 30 ) );
   //Facebook
   $wp_customize->add_setting( 'my_social_facebook', array('default' => '', 'transport' => 'postMessage') );
   $wp_customize->add_control(
@@ -40,7 +40,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_facebook',
       array(
-        'label'    => __( 'Facebook link', 'Inchora' ),
+        'label'    => __( 'Facebook link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_facebook',
         'type'     => 'text'
@@ -54,7 +54,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_twitter',
       array(
-        'label'    => __( 'Twitter link', 'Inchora' ),
+        'label'    => __( 'Twitter link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_twitter',
         'type'     => 'text'
@@ -68,7 +68,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_linkedin',
       array(
-        'label'    => __( 'LinkedIn link', 'Inchora' ),
+        'label'    => __( 'LinkedIn link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_linkedin',
         'type'     => 'text'
@@ -82,7 +82,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_instagram',
       array(
-        'label'    => __( 'Instagram link', 'Inchora' ),
+        'label'    => __( 'Instagram link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_instagram',
         'type'     => 'text'
@@ -96,7 +96,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_pinterest',
       array(
-        'label'    => __( 'Pinterest link', 'Inchora' ),
+        'label'    => __( 'Pinterest link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_pinterest',
         'type'     => 'text'
@@ -110,7 +110,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_google_plus',
       array(
-        'label'    => __( 'Google+ link', 'Inchora' ),
+        'label'    => __( 'Google+ link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_google_plus',
         'type'     => 'text'
@@ -124,7 +124,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_youtube',
       array(
-        'label'    => __( 'Youtube link', 'Inchora' ),
+        'label'    => __( 'Youtube link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_youtube',
         'type'     => 'text'
@@ -138,7 +138,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_vimeo',
       array(
-        'label'    => __( 'Vimeo link', 'Inchora' ),
+        'label'    => __( 'Vimeo link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_vimeo',
         'type'     => 'text'
@@ -152,7 +152,7 @@ function my_customize_register( $wp_customize ) {
       $wp_customize,
       'my_social_skype',
       array(
-        'label'    => __( 'Skype link', 'Inchora' ),
+        'label'    => __( 'Skype link', 'Site' ),
         'section'  => 'my_social',
         'settings' => 'my_social_skype',
         'type'     => 'text'

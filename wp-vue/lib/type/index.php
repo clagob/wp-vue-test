@@ -3,7 +3,7 @@ require_once(dirname( __FILE__ ).'/meta.php');
 require_once(dirname( __FILE__ ).'/taxonomy.php');
 
 // Types
-require_once(dirname( __FILE__ ).'/deal/deal.php');
+//require_once(dirname( __FILE__ ).'/deal/deal.php');
 
 
 // ACF
